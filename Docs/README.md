@@ -1,10 +1,10 @@
 ## Stardeus
 
-Stardeus is an open ended space base building colony management sim. You are the Ship Computer. Manage robots and drones, rebuild a destroyed space ship, mine asteroids for resources, explore the universe, create living conditions for human colonists, or put them in the matrix and exploit them.
+<iframe src="https://store.steampowered.com/widget/1380910/" width="646" height="190" frameborder="0"></iframe>
 
 ### Graphs
 
-- [Gameplay](https://kodolinija.github.io/stardeus-graphs/gameplay/)
+- [Gameplay](/stardeus-graphs/gameplay/)
 
 ### Links
 
