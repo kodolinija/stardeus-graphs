@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {"id": "Start", "group": "start", "val": 10},
+    {"id": "Expansion", "group": 1, "val" : 5},
+    {"id": "Human Survival", "group": 2, "val" : 5},
+    {"id": "Resource Management", "group": "resources", "val" : 5},
+    {"id": "Electricity Grid", "group": "electricity", "val" : 5},
+    {"id": "Workers Need Energy", "group": "electricity", "val" : 5},
+    {"id": "Build Charge Station", "group": "electricity", "val" : 5},
+    {"id": "Need Electricity Production", "group": "electricity", "val" : 5},
+    {"id": "Build Matter Reactor", "group": "electricity", "val" : 5},
+    {"id": "Need Fuel Source", "group": "electricity", "val" : 5},
+    {"id": "Need Materials", "group": "resources", "val" : 5},
+    {"id": "Research", "group": 4, "val" : 5},
+    {"id": "Events", "group": 5, "val" : 5}
+  ],
+  "links": [
+    {"source": "Start", "target": "Expansion"},
+    {"source": "Start", "target": "Human Survival"},
+    {"source": "Start", "target": "Electricity Grid"},
+    {"source": "Start", "target": "Resource Management"},
+    {"source": "Electricity Grid", "target": "Workers Need Energy"},
+    {"source": "Workers Need Energy", "target": "Build Charge Station"},
+    {"source": "Electricity Grid", "target": "Need Electricity Production"},
+    {"source": "Need Electricity Production", "target": "Build Matter Reactor"},
+    {"source": "Build Matter Reactor", "target": "Need Fuel Source"},
+    {"source": "Resource Management", "target": "Need Materials"},
+    {"source": "Need Fuel Source", "target": "Need Materials"},
+    {"source": "Start", "target": "Research"},
+    {"source": "Start", "target": "Events"}
+  ]
+}
