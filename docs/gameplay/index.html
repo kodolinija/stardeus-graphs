@@ -1,56 +1,45 @@
 <head>
   <style> body { margin: 0; } </style>
-  <script src="//unpkg.com/d3-dsv"></script>
-  <script src="//unpkg.com/d3-quadtree"></script>
-  <script src="//unpkg.com/d3-force"></script>
-  <script src="//unpkg.com/force-graph"></script>
+  <script src="//unpkg.com/three"></script>
+  <script src="//unpkg.com/three-spritetext"></script>
+  <script src="//unpkg.com/3d-force-graph"></script>
   <!--<script src="../../dist/force-graph.js"></script>-->
 </head>
 
 <body>
   <div id="graph"></div>
 
-  <script>
-   fetch('../data/gameplay.json').then(res => res.json()).then(data => {
+  <script type="module">
+      import { UnrealBloomPass } from '//cdn.skypack.dev/three/examples/jsm/postprocessing/UnrealBloomPass.js';
       const NODE_REL_SIZE = 1;
-      const Graph = ForceGraph()
+      const Graph = ForceGraph3D({ controlType: 'orbit' })
       (document.getElementById('graph'))
-        .graphData(data)
-        .backgroundColor('#000000')
-        .linkColor(() => 'rgba(255,255,255,0.8)')
+        .jsonUrl("../data/gameplay.json")
         .nodeId('id')
         .linkDirectionalParticles(1)
         .linkDirectionalParticleSpeed(0.002)
         .linkDirectionalParticleWidth(2)
+        .linkColor('white')
+        .linkOpacity(1)
         .nodeAutoColorBy('group')
+        .linkAutoColorBy('group')
         .nodeRelSize(NODE_REL_SIZE)
-        .d3Force('collision', d3.forceCollide(node => Math.sqrt(100 / (node.level + 1)) * NODE_REL_SIZE))
-        .d3VelocityDecay(0.3)
-        .nodeCanvasObject((node, ctx, globalScale) => {
-          const label = node.id;
-          const fontSize = 16/globalScale;
-          ctx.font = `${fontSize}px Sans-Serif`;
-          const textWidth = ctx.measureText(label).width  + 4;
-          const bckgDimensions = [textWidth, fontSize + 2].map(n => n + fontSize * 0.2); // some padding
-          const bckgDimensionsInner = [textWidth - 0.5, fontSize + 1.5].map(n => n + fontSize * 0.2); // some padding
-
-          ctx.fillStyle = 'rgba(255, 255, 255, 1)';
-          ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
-          ctx.fillStyle = 'rgba(32, 0, 32, 1)';
-          ctx.fillRect(node.x - bckgDimensionsInner[0] / 2, node.y - bckgDimensionsInner[1] / 2, ...bckgDimensionsInner);
-
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = node.color;
-          ctx.fillText(label, node.x, node.y);
-
-          node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
-        })
-        .nodePointerAreaPaint((node, color, ctx) => {
-          ctx.fillStyle = color;
-          const bckgDimensions = node.__bckgDimensions;
-          bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+        .nodeThreeObject(node => {
+          const sprite = new SpriteText(node.id);
+          sprite.backgroundColor = 'black';
+          sprite.padding = 3;
+          sprite.color = node.color;
+          sprite.borderColor = 'white';
+          sprite.borderWidth = 1;
+          sprite.borderRadius = 3;
+          sprite.textHeight = 6;
+          return sprite;
         });
-    });
+
+        const bloomPass = new UnrealBloomPass();
+        bloomPass.strength = 0.5;
+        bloomPass.radius = 0.3;
+        bloomPass.threshold = 0.1;
+        Graph.postProcessingComposer().addPass(bloomPass);
   </script>
 </body>
