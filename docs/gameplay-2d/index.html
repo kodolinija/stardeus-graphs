@@ -65,11 +65,12 @@
       (document.getElementById('graph'))
         .graphData(data)
         .backgroundColor('transparent')
-        .linkColor(() => 'rgba(255,255,255,0.8)')
         .nodeId('id')
-        .linkDirectionalParticles(3)
+        .linkCurvature('curve')
+        .linkDirectionalParticles(link => link.wip ? 0 : 3)
         .linkDirectionalParticleSpeed(0.002)
         .linkDirectionalParticleWidth(3)
+        .linkColor(link => link.wip ? 'magenta' : 'rgba(255,255,255,0.8)')
         .nodeAutoColorBy('group')
         .nodeRelSize(NODE_REL_SIZE)
         .d3Force('collision', d3.forceCollide(node => Math.sqrt(100 / (node.level + 1)) * NODE_REL_SIZE))
@@ -83,7 +84,11 @@
           const bckgDimensions = [textWidth, fontSize + 2].map(n => n + fontSize * 0.2); // some padding
           const bckgDimensionsInner = [textWidth - 0.5, fontSize + 1.5].map(n => n + fontSize * 0.2); // some padding
 
-          ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+          if (node.wip) {
+            ctx.fillStyle = 'magenta';
+          } else {
+            ctx.fillStyle = 'white';
+          }
           ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
           ctx.fillStyle = 'rgba(32, 0, 32, 1)';
           ctx.fillRect(node.x - bckgDimensionsInner[0] / 2, node.y - bckgDimensionsInner[1] / 2, ...bckgDimensionsInner);
