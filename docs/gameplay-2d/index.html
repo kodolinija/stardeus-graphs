@@ -59,7 +59,7 @@
   <script type="module">
     let settled = false;
     fetch('../data/gameplay.json').then(res => res.json()).then(data => {
-      const NODE_REL_SIZE = 20;
+      const NODE_REL_SIZE = 80;
       const N = 10;
       const Graph = ForceGraph()
       (document.getElementById('graph'))

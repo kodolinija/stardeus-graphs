@@ -71,15 +71,13 @@
         .linkCurvature('curve')
         .cooldownTicks(300)
         .d3VelocityDecay(0.1)
-        .nodeAutoColorBy('group')
-        //.linkAutoColorBy('group')
         .nodeRelSize(NODE_REL_SIZE)
         .nodeThreeObject(node => {
           const sprite = new SpriteText(node.id);
           sprite.backgroundColor = 'black';
           sprite.padding = 3;
           sprite.color = node.color;
-          sprite.borderColor = 'white';
+          sprite.borderColor = node.wip ? 'magenta' : 'white';
           sprite.borderWidth = 1;
           sprite.borderRadius = 3;
           sprite.textHeight = 6;
