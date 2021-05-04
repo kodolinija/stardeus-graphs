@@ -68,7 +68,8 @@
         .linkDirectionalParticleWidth(3)
         .linkColor('white')
         .linkOpacity(1)
-        .cooldownTicks(100)
+        .cooldownTicks(300)
+        .d3VelocityDecay(0.1)
         .nodeAutoColorBy('group')
         //.linkAutoColorBy('group')
         .nodeRelSize(NODE_REL_SIZE)
@@ -86,18 +87,20 @@
 
       Graph
         .d3Force('link')
-        .distance(link => 50);
+        .distance(link => link.dist || 50);
     
       //Graph.numDimensions(3);
 
       Graph.d3Force('center', null);
 
+/*
       // fit to canvas when engine stops
       Graph.onEngineStop(() => {
         if (!settled) {
           settled = true;
-          Graph.zoomToFit(1000);
+          Graph.zoomToFit(500);
         }
       });
+      */
   </script>
 </body>

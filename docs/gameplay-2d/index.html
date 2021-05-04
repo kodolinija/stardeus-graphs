@@ -59,8 +59,8 @@
   <script type="module">
     let settled = false;
     fetch('../data/gameplay.json').then(res => res.json()).then(data => {
-      const NODE_REL_SIZE = 50;
-      const N = 80;
+      const NODE_REL_SIZE = 20;
+      const N = 10;
       const Graph = ForceGraph()
       (document.getElementById('graph'))
         .graphData(data)
@@ -70,11 +70,11 @@
         .linkDirectionalParticles(3)
         .linkDirectionalParticleSpeed(0.002)
         .linkDirectionalParticleWidth(3)
-        .cooldownTicks(100)
         .nodeAutoColorBy('group')
         .nodeRelSize(NODE_REL_SIZE)
         .d3Force('collision', d3.forceCollide(node => Math.sqrt(100 / (node.level + 1)) * NODE_REL_SIZE))
-        .d3VelocityDecay(0.3)
+        .cooldownTicks(300)
+        .d3VelocityDecay(0.1)
         .nodeCanvasObject((node, ctx, globalScale) => {
           const label = node.id;
           const fontSize = 16/globalScale;
@@ -101,11 +101,17 @@
           bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
         });
 
+        Graph
+            .d3Force('link')
+            .distance(link => link.dist || 50);
+        /*
         Graph.d3Force('collide', d3.forceCollide(Graph.nodeRelSize()));
         Graph.d3Force('box', () => {
                 const SQUARE_HALF_SIDE = Graph.nodeRelSize() * N * 0.5;
             });
+            */
         Graph.d3Force('center', null);
+        /*
 
         // fit to canvas when engine stops
         Graph.onEngineStop(() => {
@@ -114,6 +120,7 @@
                 Graph.zoomToFit(1000);
             }
         });
+        */
     });
   </script>
 </body>
