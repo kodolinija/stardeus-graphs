@@ -4,7 +4,8 @@ Stardeus is an open ended space base building colony management sim. You are the
 
 ### Graphs
 
-- [Gameplay](https://kodolinija.github.io/stardeus-graphs/gameplay/)
+- [Gameplay (2D)](https://kodolinija.github.io/stardeus-graphs/gameplay-2d/)
+- [Gameplay (3D)](https://kodolinija.github.io/stardeus-graphs/gameplay-3d/)
 
 ### Links
 

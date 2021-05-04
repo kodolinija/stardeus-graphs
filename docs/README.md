@@ -4,7 +4,8 @@
 
 ### Graphs
 
-- [Gameplay](/stardeus-graphs/gameplay/)
+- [Gameplay (2D)](/stardeus-graphs/gameplay-2d/)
+- [Gameplay (3D)](/stardeus-graphs/gameplay-3d/)
 
 ### Links
 

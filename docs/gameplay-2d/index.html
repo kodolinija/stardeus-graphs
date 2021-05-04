@@ -1,0 +1,95 @@
+<head>
+  <style> body { margin: 0; } </style>
+  <script src="//unpkg.com/d3-dsv"></script>
+  <script src="//unpkg.com/d3-quadtree"></script>
+  <script src="//unpkg.com/d3-force"></script>
+  <script src="//unpkg.com/force-graph"></script>
+  <title>Stardeus Gameplay Graph (2D)</title>
+  <style>
+      body { 
+          background-color: black;
+          color: white;
+      }
+      a { color: white; }
+      #links { 
+          position: absolute;
+          padding: 5px; 
+          top:0px;
+          margin-left: 0px;
+          margin-right: 0px;
+      }
+      #logo { 
+          position: absolute;
+          top: 25px;
+          right: 25px;
+      }
+      #graph {
+          
+      }
+  </style>
+</head>
+
+<body>
+  <div id="graph"></div>
+  <div id="links">
+    <a href="/stardeus-graphs/">Home</a> |
+    <a href="/stardeus-graphs/gameplay-3d/">3D Graph</a> |
+    <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs">Stardeus on Steam</a> |
+    <a href="https://discordapp.com/invite/89amEwP">Kodo Linija Discord</a> |
+    <a href="https://reddit.com/r/stardeus">/r/stardeus on Reddit</a> |
+    <a href="https://twitter.com/StardeusGame">@StardeusGame on Twitter</a>
+  </div>
+  <div id="logo">
+      <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs"><img src="../StardeusLogo.png" height="50"/></a>
+  </div>
+
+  <script type="module">
+   fetch('../data/gameplay.json').then(res => res.json()).then(data => {
+      const NODE_REL_SIZE = 20;
+      const Graph = ForceGraph()
+      (document.getElementById('graph'))
+        .graphData(data)
+        .backgroundColor('transparent')
+        .linkColor(() => 'rgba(255,255,255,0.8)')
+        .nodeId('id')
+        .linkDirectionalParticles(1)
+        .linkDirectionalParticleSpeed(0.002)
+        .linkDirectionalParticleWidth(2)
+        .cooldownTicks(100)
+        .nodeAutoColorBy('group')
+        .nodeRelSize(NODE_REL_SIZE)
+        .d3Force('collision', d3.forceCollide(node => Math.sqrt(100 / (node.level + 1)) * NODE_REL_SIZE))
+        .d3VelocityDecay(0.3)
+        .nodeCanvasObject((node, ctx, globalScale) => {
+          const label = node.id;
+          const fontSize = 16/globalScale;
+          ctx.font = `${fontSize}px Sans-Serif`;
+          const textWidth = ctx.measureText(label).width  + 4;
+          const bckgDimensions = [textWidth, fontSize + 2].map(n => n + fontSize * 0.2); // some padding
+          const bckgDimensionsInner = [textWidth - 0.5, fontSize + 1.5].map(n => n + fontSize * 0.2); // some padding
+
+          ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+          ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+          ctx.fillStyle = 'rgba(32, 0, 32, 1)';
+          ctx.fillRect(node.x - bckgDimensionsInner[0] / 2, node.y - bckgDimensionsInner[1] / 2, ...bckgDimensionsInner);
+
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = node.color;
+          ctx.fillText(label, node.x, node.y);
+
+          node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+        })
+        .nodePointerAreaPaint((node, color, ctx) => {
+          ctx.fillStyle = color;
+          const bckgDimensions = node.__bckgDimensions;
+          bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+        });
+
+        Graph.d3Force('center', null);
+
+        // fit to canvas when engine stops
+        Graph.onEngineStop(() => Graph.zoomToFit(1000));
+    });
+  </script>
+</body>

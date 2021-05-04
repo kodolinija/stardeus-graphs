@@ -25,7 +25,9 @@
     {"id": "Mine Planets", "group": "resources", "val" : 5},
     {"id": "Research", "group": "research", "val" : 5},
     {"id": "Needs Memory", "group": "research", "val" : 5},
+    {"id": "Build Memory Module", "group": "research", "val" : 5},
     {"id": "Needs Disk Space", "group": "research", "val" : 5},
+    {"id": "Build Disk Module", "group": "research", "val" : 5},
     {"id": "Landing On Planets", "group": "travel", "val" : 5},
     {"id": "Needs Expedition", "group": "travel", "val" : 5},
     {"id": "Build Shuttle", "group": "travel", "val" : 5},
@@ -80,7 +82,9 @@
     {"source": "Needs Starmap", "target": "Build Bridge Controls"},
     {"source": "Start", "target": "Research"},
     {"source": "Research", "target": "Needs Memory"},
+    {"source": "Needs Memory", "target": "Build Memory Module"},
     {"source": "Research", "target": "Needs Disk Space"},
+    {"source": "Needs Disk Space", "target": "Build Disk Module"},
     {"source": "Research", "target": "Needs Electricity Production"},
     {"source": "Start", "target": "Events"}
   ]

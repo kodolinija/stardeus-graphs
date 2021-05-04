@@ -1,0 +1,83 @@
+<head>
+  <style> body { margin: 0; } </style>
+  <script src="//unpkg.com/three"></script>
+  <script src="//unpkg.com/three-spritetext"></script>
+  <script src="//unpkg.com/3d-force-graph"></script>
+  <title>Stardeus Gameplay Graph (3D)</title>
+  <style>
+      body { 
+          background-color: black;
+          color: white;
+      }
+      a { color: white; }
+      #links { 
+          position: absolute;
+          padding: 5px; 
+          top:0px;
+          margin-left: 0px;
+          margin-right: 0px;
+      }
+      #logo { 
+          position: absolute;
+          top: 25px;
+          right: 25px;
+      }
+      #graph {
+          
+      }
+  </style>
+</head>
+
+<body>
+  <div id="graph"></div>
+  <div id="links">
+    <a href="/stardeus-graphs/">Home</a> |
+    <a href="/stardeus-graphs/gameplay-2d/">2D Graph</a> |
+    <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs">Stardeus on Steam</a> |
+    <a href="https://discordapp.com/invite/89amEwP">Kodo Linija Discord</a> |
+    <a href="https://reddit.com/r/stardeus">/r/stardeus on Reddit</a> |
+    <a href="https://twitter.com/StardeusGame">@StardeusGame on Twitter</a>
+  </div>
+  <div id="logo">
+      <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs"><img src="../StardeusLogo.png" height="50"/></a>
+  </div>
+
+  <script type="module">
+      const NODE_REL_SIZE = 1;
+      const Graph = ForceGraph3D({ controlType: 'orbit' })
+      (document.getElementById('graph'))
+        .jsonUrl("../data/gameplay.json")
+        .nodeId('id')
+        .linkDirectionalParticles(1)
+        .linkDirectionalParticleSpeed(0.002)
+        .linkDirectionalParticleWidth(2)
+        .linkColor('white')
+        .linkOpacity(1)
+        .cooldownTicks(100)
+        .nodeAutoColorBy('group')
+        .linkAutoColorBy('group')
+        .nodeRelSize(NODE_REL_SIZE)
+        .nodeThreeObject(node => {
+          const sprite = new SpriteText(node.id);
+          sprite.backgroundColor = 'black';
+          sprite.padding = 3;
+          sprite.color = node.color;
+          sprite.borderColor = 'white';
+          sprite.borderWidth = 1;
+          sprite.borderRadius = 3;
+          sprite.textHeight = 6;
+          return sprite;
+        });
+
+      const linkForce = Graph
+      .d3Force('link')
+      .distance(link => 50);
+    
+      Graph.numDimensions(3);
+
+      Graph.d3Force('center', null);
+
+      // fit to canvas when engine stops
+      Graph.onEngineStop(() => Graph.zoomToFit(1000));
+  </script>
+</body>
