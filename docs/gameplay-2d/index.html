@@ -1,5 +1,6 @@
 <head>
-  <style> body { margin: 0; } </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
   <script src="//unpkg.com/d3-dsv"></script>
   <script src="//unpkg.com/d3-quadtree"></script>
   <script src="//unpkg.com/d3-force"></script>
@@ -7,24 +8,34 @@
   <title>Stardeus Gameplay Graph (2D)</title>
   <style>
       body { 
+          margin: 0;
           background-color: black;
           color: white;
+          font-family: 'Michroma', sans-serif;
+          font-size: 1.2em;
+          text-transform: uppercase;
       }
-      a { color: white; }
+      a { 
+          color: white; 
+          text-decoration: none;
+      }
       #links { 
           position: absolute;
-          padding: 5px; 
+          padding: 10px; 
           top:0px;
           margin-left: 0px;
           margin-right: 0px;
       }
       #logo { 
           position: absolute;
-          top: 25px;
-          right: 25px;
+          top: 0px;
+          right: 10px;
       }
-      #graph {
-          
+      #alt-version { 
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          padding: 10px;
       }
   </style>
 </head>
@@ -32,29 +43,33 @@
 <body>
   <div id="graph"></div>
   <div id="links">
-    <a href="/stardeus-graphs/">Home</a> |
-    <a href="/stardeus-graphs/gameplay-3d/">3D Graph</a> |
-    <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs">Stardeus on Steam</a> |
-    <a href="https://discordapp.com/invite/89amEwP">Kodo Linija Discord</a> |
-    <a href="https://reddit.com/r/stardeus">/r/stardeus on Reddit</a> |
-    <a href="https://twitter.com/StardeusGame">@StardeusGame on Twitter</a>
+    <a href="/stardeus-graphs/">Home</a> &bull;
+    <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs">Steam</a> &bull;
+    <a href="https://discordapp.com/invite/89amEwP">Discord</a> &bull;
+    <a href="https://reddit.com/r/stardeus">Reddit</a> &bull;
+    <a href="https://twitter.com/StardeusGame">Twitter</a>
+  </div>
+  <div id="alt-version">
+    <a href="../gameplay-3d/">Switch to 3D</a>
   </div>
   <div id="logo">
       <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs"><img src="../StardeusLogo.png" height="50"/></a>
   </div>
 
   <script type="module">
-   fetch('../data/gameplay.json').then(res => res.json()).then(data => {
-      const NODE_REL_SIZE = 20;
+    let settled = false;
+    fetch('../data/gameplay.json').then(res => res.json()).then(data => {
+      const NODE_REL_SIZE = 50;
+      const N = 80;
       const Graph = ForceGraph()
       (document.getElementById('graph'))
         .graphData(data)
         .backgroundColor('transparent')
         .linkColor(() => 'rgba(255,255,255,0.8)')
         .nodeId('id')
-        .linkDirectionalParticles(1)
+        .linkDirectionalParticles(3)
         .linkDirectionalParticleSpeed(0.002)
-        .linkDirectionalParticleWidth(2)
+        .linkDirectionalParticleWidth(3)
         .cooldownTicks(100)
         .nodeAutoColorBy('group')
         .nodeRelSize(NODE_REL_SIZE)
@@ -86,10 +101,19 @@
           bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
         });
 
+        Graph.d3Force('collide', d3.forceCollide(Graph.nodeRelSize()));
+        Graph.d3Force('box', () => {
+                const SQUARE_HALF_SIDE = Graph.nodeRelSize() * N * 0.5;
+            });
         Graph.d3Force('center', null);
 
         // fit to canvas when engine stops
-        Graph.onEngineStop(() => Graph.zoomToFit(1000));
+        Graph.onEngineStop(() => {
+            if (!settled) {
+                settled = true;
+                Graph.zoomToFit(1000);
+            }
+        });
     });
   </script>
 </body>
