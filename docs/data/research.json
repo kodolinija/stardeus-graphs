@@ -1,0 +1,78 @@
+{
+  "nodes": [
+    {"id": "Start", "group": "start", "val": 10, "color" : "aquamarine"},
+
+    {"id": "Computing", "group": "computing", "val" : 5, "color" : "mediumorchid"},
+    {"id": "Advanced Computing", "group": "computing", "val" : 5, "color" : "mediumorchid"},
+    {"id": "Self Replication", "group": "computing", "val" : 5, "color" : "mediumorchid"},
+    {"id": "Ship Controls", "group": "computing", "val" : 5, "color" : "mediumorchid"},
+    {"id": "Scanning", "group": "computing", "val" : 5, "color" : "mediumorchid"},
+    {"id": "Communications", "group": "computing", "val" : 5, "color" : "mediumorchid"},
+
+    {"id": "Construction", "group": "construction", "val" : 5, "color" : "orange"},
+    {"id": "Advanced Construction", "group": "construction", "val" : 5, "color" : "orange"},
+    {"id": "Furniture", "group": "construction", "val" : 5, "color" : "orange"},
+    
+    {"id": "Technology", "group": "technology", "val" : 5, "color" : "lightslategrey"},
+    {"id": "Robotics", "group": "technology", "val" : 5, "color" : "lightslategrey"},
+    {"id": "Advanced Robotics", "group": "technology", "val" : 5, "color" : "lightslategrey"},
+    {"id": "Resource Processing", "group": "technology", "val" : 5, "color" : "lightslategrey"},
+    {"id": "Temperature Control", "group": "technology", "val" : 5, "color" : "lightslategrey"},
+    {"id": "Atmosphere Control", "group": "technology", "val" : 5, "color" : "lightslategrey"},
+    {"id": "Cryogenics", "group": "technology", "val" : 5, "color" : "lightslategrey"},
+
+    {"id": "Biotech", "group": "biotech", "val" : 5, "color" : "limegreen"},
+    {"id": "Vegetarian Food", "group": "biotech", "val" : 5, "color" : "limegreen"},
+    {"id": "Recycling", "group": "biotech", "val" : 5, "color" : "limegreen"},
+    {"id": "Advanced Recycling", "group": "biotech", "val" : 5, "color" : "limegreen"},
+    {"id": "Cloning", "group": "biotech", "val" : 5, "color" : "limegreen"},
+    {"id": "Clothing", "group": "biotech", "val" : 5, "color" : "limegreen"},
+    {"id": "Hygiene", "group": "biotech", "val" : 5, "color" : "limegreen"},
+
+    {"id": "Energy", "group": "energy", "val" : 5, "color" : "deepskyblue"},
+    {"id": "Advanced Energy", "group": "energy", "val" : 5, "color" : "deepskyblue"},
+    {"id": "Energy Efficiency", "group": "energy", "val" : 5, "color" : "deepskyblue"},
+    {"id": "Lighting", "group": "energy", "val" : 5, "color" : "deepskyblue"},
+    {"id": "Propulsion", "group": "energy", "val" : 5, "color" : "deepskyblue"},
+    {"id": "Advanced Propulsion", "group": "energy", "val" : 5, "color" : "deepskyblue"},
+    {"id": "Shuttle", "group": "energy", "val" : 5, "color" : "deepskyblue"}
+  ],
+
+  "links": [
+    {"source": "Start", "target": "Computing"},
+    {"source": "Computing", "target": "Advanced Computing"},
+    {"source": "Advanced Computing", "target": "Self Replication"},
+    {"source": "Computing", "target": "Ship Controls"},
+    {"source": "Computing", "target": "Scanning"},
+    {"source": "Scanning", "target": "Communications"},
+
+    {"source": "Start", "target": "Construction"},
+    {"source": "Construction", "target": "Furniture"},
+    {"source": "Construction", "target": "Advanced Construction"},
+
+    {"source": "Start", "target": "Biotech"},
+    {"source": "Biotech", "target": "Vegetarian Food"},
+    {"source": "Biotech", "target": "Recycling"},
+    {"source": "Recycling", "target": "Advanced Recycling"},
+    {"source": "Biotech", "target": "Cloning"},
+    {"source": "Biotech", "target": "Clothing"},
+    {"source": "Biotech", "target": "Hygiene"},
+
+    {"source": "Start", "target": "Technology"},
+    {"source": "Technology", "target": "Robotics"},
+    {"source": "Technology", "target": "Resource Processing"},
+    {"source": "Technology", "target": "Temperature Control"},
+    {"source": "Temperature Control", "target": "Cryogenics"},
+    {"source": "Technology", "target": "Atmosphere Control"},
+    {"source": "Robotics", "target": "Advanced Robotics"},
+
+    {"source": "Start", "target": "Energy"},
+    {"source": "Energy", "target": "Advanced Energy"},
+    {"source": "Advanced Energy", "target": "Energy Efficiency"},
+    {"source": "Advanced Energy", "target": "Advanced Propulsion"},
+    {"source": "Energy", "target": "Lighting"},
+    {"source": "Energy", "target": "Propulsion"},
+    {"source": "Propulsion", "target": "Advanced Propulsion"},
+    {"source": "Propulsion", "target": "Shuttle"}
+  ]
+}

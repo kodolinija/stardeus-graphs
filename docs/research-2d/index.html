@@ -1,0 +1,131 @@
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+  <script src="//unpkg.com/d3-dsv"></script>
+  <script src="//unpkg.com/d3-quadtree"></script>
+  <script src="//unpkg.com/d3-force"></script>
+  <script src="//unpkg.com/force-graph"></script>
+  <title>Stardeus Research Graph (2D)</title>
+  <style>
+      body { 
+          margin: 0;
+          background-color: black;
+          color: white;
+          font-family: 'Michroma', sans-serif;
+          font-size: 1.2em;
+          text-transform: uppercase;
+      }
+      a { 
+          color: white; 
+          text-decoration: none;
+      }
+      #links { 
+          position: absolute;
+          padding: 10px; 
+          top:0px;
+          margin-left: 0px;
+          margin-right: 0px;
+      }
+      #logo { 
+          position: absolute;
+          top: 0px;
+          right: 10px;
+      }
+      #alt-version { 
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          padding: 10px;
+      }
+  </style>
+</head>
+
+<body>
+  <div id="graph"></div>
+  <div id="links">
+    <a href="/stardeus-graphs/">Home</a> &bull;
+    <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs">Steam</a> &bull;
+    <a href="https://discordapp.com/invite/89amEwP">Discord</a> &bull;
+    <a href="https://reddit.com/r/stardeus">Reddit</a> &bull;
+    <a href="https://twitter.com/StardeusGame">Twitter</a>
+  </div>
+  <div id="alt-version">
+    <a href="../research-3d/">Switch to 3D</a>
+  </div>
+  <div id="logo">
+      <a href="https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs"><img src="../StardeusLogo.png" height="50"/></a>
+  </div>
+
+  <script type="module">
+    let settled = false;
+    fetch('../data/research-gen.json').then(res => res.json()).then(data => {
+      const NODE_REL_SIZE = 80;
+      const N = 10;
+      const Graph = ForceGraph()
+      (document.getElementById('graph'))
+        .graphData(data)
+        .backgroundColor('transparent')
+        .nodeId('id')
+        .linkCurvature('curve')
+        .linkDirectionalParticles(link => link.wip ? 0 : 3)
+        .linkDirectionalParticleSpeed(0.002)
+        .linkDirectionalParticleWidth(3)
+        .linkColor(link => link.wip ? 'magenta' : 'rgba(255,255,255,0.8)')
+        .nodeAutoColorBy('group')
+        .nodeRelSize(NODE_REL_SIZE)
+        .d3Force('collision', d3.forceCollide(node => Math.sqrt(100 / (node.level + 1)) * NODE_REL_SIZE))
+        .cooldownTicks(300)
+        .d3VelocityDecay(0.1)
+        .nodeCanvasObject((node, ctx, globalScale) => {
+          const label = node.id;
+          const fontSize = 16/globalScale;
+          ctx.font = `${fontSize}px Sans-Serif`;
+          const textWidth = ctx.measureText(label).width  + 4;
+          const bckgDimensions = [textWidth, fontSize + 2].map(n => n + fontSize * 0.2); // some padding
+          const bckgDimensionsInner = [textWidth - 0.5, fontSize + 1.5].map(n => n + fontSize * 0.2); // some padding
+
+          if (node.wip) {
+            ctx.fillStyle = 'magenta';
+          } else {
+            ctx.fillStyle = 'white';
+          }
+          ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+          ctx.fillStyle = 'rgba(32, 0, 32, 1)';
+          ctx.fillRect(node.x - bckgDimensionsInner[0] / 2, node.y - bckgDimensionsInner[1] / 2, ...bckgDimensionsInner);
+
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = node.color;
+          ctx.fillText(label, node.x, node.y);
+
+          node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+        })
+        .nodePointerAreaPaint((node, color, ctx) => {
+          ctx.fillStyle = color;
+          const bckgDimensions = node.__bckgDimensions;
+          bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+        });
+
+        Graph
+            .d3Force('link')
+            .distance(link => link.dist || 50);
+        /*
+        Graph.d3Force('collide', d3.forceCollide(Graph.nodeRelSize()));
+        Graph.d3Force('box', () => {
+                const SQUARE_HALF_SIDE = Graph.nodeRelSize() * N * 0.5;
+            });
+            */
+        Graph.d3Force('center', null);
+        /*
+
+        // fit to canvas when engine stops
+        Graph.onEngineStop(() => {
+            if (!settled) {
+                settled = true;
+                Graph.zoomToFit(1000);
+            }
+        });
+        */
+    });
+  </script>
+</body>
