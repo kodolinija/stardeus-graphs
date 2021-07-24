@@ -11,6 +11,7 @@ Stardeus is an open ended space base building colony management sim. You are the
 
 ### Links
 
+- [Official Stardeus Website](https://stardeusgame.com)
 - [Stardeus on Steam](https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs)
 - [Kodo Linija Discord](https://discordapp.com/invite/89amEwP)
 - [/r/stardeus on Reddit](https://reddit.com/r/stardeus)
