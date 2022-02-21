@@ -1,0 +1,31 @@
+{
+  "nodes": [
+    {"id": "Combat", "group": "squad", "val": 10, "color" : "aquamarine"},
+    {"id": "Strategy_Unaware", "group": "squad", "val": 10, "color" : "aquamarine"},
+    {"id": "Strategy_Escaping", "group": "squad", "val": 10, "color" : "aquamarine"},
+    {"id": "Strategy_Attacking", "group": "squad", "val": 10, "color" : "aquamarine"},
+    {"id": "Strategy_SabotageLowRisk", "group": "squad", "val": 10, "color" : "aquamarine"},
+    {"id": "Strategy_SabotageSuicidal", "group": "squad", "val": 10, "color" : "aquamarine"},
+    {"id": "Strategy_TheftLowRisk", "group": "squad", "val": 10, "color" : "aquamarine"},
+    {"id": "Strategy_TheftHighReward", "group": "squad", "val": 10, "color" : "aquamarine"},
+
+    {"id": "Tactic_StealMat", "group": "unit", "val": 10, "color" : "yellow" },
+    {"id": "Tactic_CarryLoot", "group": "unit", "val": 10, "color" : "yellow" },
+    {"id": "Tactic_DirectAttack", "group": "unit", "val": 10, "color" : "yellow"}
+  ],
+  "links": [
+    {"source": "Combat", "target": "Strategy_Unaware" },
+    {"source": "Combat", "target": "Strategy_Attacking" },
+    {"source": "Combat", "target": "Strategy_Escaping" },
+    {"source": "Combat", "target": "Strategy_SabotageLowRisk" },
+    {"source": "Combat", "target": "Strategy_SabotageSuicidal" },
+    {"source": "Combat", "target": "Strategy_TheftLowRisk" },
+    {"source": "Combat", "target": "Strategy_TheftHighReward" },
+
+    {"source": "Strategy_TheftLowRisk", "target": "Tactic_StealMat" },
+    {"source": "Tactic_StealMat", "target": "Tactic_CarryLoot" },
+    {"source": "Tactic_CarryLoot", "target": "Strategy_TheftLowRisk" },
+
+    {"source": "Strategy_Attacking", "target": "Tactic_DirectAttack" }
+  ]
+}
