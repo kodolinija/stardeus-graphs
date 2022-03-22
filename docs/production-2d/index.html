@@ -1,0 +1,176 @@
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+  <script src="//unpkg.com/d3-dsv"></script>
+  <script src="//unpkg.com/d3-quadtree"></script>
+  <script src="//unpkg.com/d3-force"></script>
+  <script src="//unpkg.com/force-graph"></script>
+  <title>Stardeus Production Graph (2D)</title>
+  <style>
+      body {
+          margin: 0;
+          background-color: black;
+          color: white;
+          font-family: 'Michroma', sans-serif;
+          font-size: 1.2em;
+          text-transform: uppercase;
+      }
+      a {
+          color: white;
+          text-decoration: none;
+      }
+      #links {
+          position: absolute;
+          padding: 10px;
+          top:0px;
+          margin-left: 0px;
+          margin-right: 0px;
+      }
+      #logo {
+          position: absolute;
+          top: 0px;
+          right: 10px;
+      }
+      #alt-version {
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          padding: 10px;
+      }
+  </style>
+</head>
+
+<body>
+  <div id="graph"></div>
+  <div id="links">
+    <a href="/stardeus-graphs/">Back</a> &bull;
+    <a href="https://stardeusgame.com">Stardeus</a>
+  </div>
+  <div id="alt-version">
+    <a href="../production-3d/">Switch to 3D</a>
+  </div>
+  <div id="logo">
+      <a href="https://stardeusgame.com"><img src="../StardeusLogo.png" height="50"/></a>
+  </div>
+
+  <script type="module">
+    let settled = false;
+    fetch('../data/production-gen.json').then(res => res.json()).then(data => {
+      const NODE_REL_SIZE = 80;
+      const N = 10;
+      const Graph = ForceGraph()
+      (document.getElementById('graph'))
+        .graphData(data)
+        .backgroundColor('transparent')
+        .nodeId('id')
+        .linkCurvature('curve')
+        .linkDirectionalParticles(link => link.wip ? 0 : 3)
+        .linkDirectionalParticleSpeed(0.002)
+        .linkDirectionalParticleWidth(3)
+        .linkColor(link => link.wip ? 'magenta' : 'rgba(255,255,255,0.8)')
+        .nodeAutoColorBy('group')
+        .nodeRelSize(NODE_REL_SIZE)
+        .d3Force('collision', d3.forceCollide(node => Math.sqrt(100 / (node.level + 1)) * NODE_REL_SIZE))
+        .cooldownTicks(300)
+        .d3VelocityDecay(0.1)
+        .nodeCanvasObject((node, ctx, globalScale) => {
+          const label = node.id;
+          const fontSize = 16/globalScale;
+          ctx.font = `${fontSize}px Sans-Serif`;
+          const textWidth = ctx.measureText(label).width  + 4;
+          const bckgDimensions = [textWidth, fontSize + 2].map(n => n + fontSize * 0.2); // some padding
+          const bckgDimensionsInner = [textWidth - 0.5, fontSize + 1.5].map(n => n + fontSize * 0.2); // some padding
+
+          if (node.wip) {
+            ctx.fillStyle = 'magenta';
+          } else {
+            ctx.fillStyle = 'white';
+          }
+          ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+          ctx.fillStyle = 'rgba(32, 0, 32, 1)';
+          ctx.fillRect(node.x - bckgDimensionsInner[0] / 2, node.y - bckgDimensionsInner[1] / 2, ...bckgDimensionsInner);
+
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = node.color;
+          ctx.fillText(label, node.x, node.y);
+
+          node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+        })
+        .linkCanvasObject((link, ctx) => {
+          const MAX_FONT_SIZE = 4;
+          const LABEL_NODE_MARGIN = Graph.nodeRelSize() * 1.5;
+
+          const start = link.source;
+          const end = link.target;
+
+          // ignore unbound links
+          if (link.text == undefined) { return; }
+          if (typeof start !== 'object' || typeof end !== 'object') return;
+
+          // calculate label positioning
+          const textPos = Object.assign(...['x', 'y'].map(c => ({
+            [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
+          })));
+
+          const relLink = { x: end.x - start.x, y: end.y - start.y };
+
+          const maxTextLength = Math.sqrt(Math.pow(relLink.x, 2) + Math.pow(relLink.y, 2)) - LABEL_NODE_MARGIN * 2;
+
+          let textAngle = Math.atan2(relLink.y, relLink.x);
+          // maintain label vertical orientation for legibility
+          if (textAngle > Math.PI / 2) textAngle = -(Math.PI - textAngle);
+          if (textAngle < -Math.PI / 2) textAngle = -(-Math.PI - textAngle);
+
+          const label = link.text;
+
+          // estimate fontSize to fit in link length
+          ctx.font = '1px Sans-Serif';
+          const fontSize = Math.min(MAX_FONT_SIZE, maxTextLength / ctx.measureText(label).width);
+          ctx.font = `${fontSize}px Sans-Serif`;
+          const textWidth = ctx.measureText(label).width;
+          const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+          // draw text label (with background rect)
+          ctx.save();
+          ctx.translate(textPos.x, textPos.y);
+          ctx.rotate(textAngle);
+
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+          ctx.fillRect(- bckgDimensions[0] / 2, - bckgDimensions[1] / 2, ...bckgDimensions);
+
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = 'white';
+          ctx.fillText(label, 0, 0);
+          ctx.restore();
+        })
+        .nodePointerAreaPaint((node, color, ctx) => {
+          ctx.fillStyle = color;
+          const bckgDimensions = node.__bckgDimensions;
+          bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+        });
+
+        Graph
+            .d3Force('link')
+            .distance(link => link.dist || 50);
+        /*
+        Graph.d3Force('collide', d3.forceCollide(Graph.nodeRelSize()));
+        Graph.d3Force('box', () => {
+                const SQUARE_HALF_SIDE = Graph.nodeRelSize() * N * 0.5;
+            });
+            */
+        Graph.d3Force('center', null);
+        /*
+
+        // fit to canvas when engine stops
+        Graph.onEngineStop(() => {
+            if (!settled) {
+                settled = true;
+                Graph.zoomToFit(1000);
+            }
+        });
+        */
+    });
+  </script>
+</body>

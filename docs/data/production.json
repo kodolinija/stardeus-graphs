@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    {"id": "Coal", "group": "mat", "val": 10, "color" : "aquamarine"},
+    {"id": "CarbonFiber", "group": "mat", "val": 10, "color" : "aquamarine"},
+    {"id": "Carbon", "group": "mat", "val": 10, "color" : "aquamarine"}
+  ],
+  "links": [
+    {"source": "Coal", "target": "Carbon", "text" : "proc out: [1]" },
+    {"source": "Carbon", "target": "CarbonFiber", "text" : "craft ingr: [1]" }
+  ]
+}
