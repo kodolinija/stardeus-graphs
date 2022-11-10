@@ -73,6 +73,16 @@
       "tooltip": "Ship building and base building features and content"
     },
     {
+      "id": "More Devices", "group": "ship", "val" : 5, "color" : "lightslategrey",
+      "type" : "Content",
+      "tooltip": "Larger variety of various devices for all sorts of purposes"
+    },
+    {
+      "id": "Decorative Items", "group": "ship", "val" : 5, "color" : "lightslategrey",
+      "type" : "Content",
+      "tooltip": "Things for making your ship feel like home"
+    },
+    {
       "id": "Auto Rebuild", "group": "ship", "val" : 5, "color" : "lightslategrey",
       "type" : "Feature",
       "tooltip": "Automatically rebuild destroyed structure and devices"
@@ -308,6 +318,8 @@
 
     {"source": "Start", "target": "Base Building"},
     {"source": "Base Building", "target": "Auto Rebuild"},
+    {"source": "Base Building", "target": "More Devices"},
+    {"source": "Base Building", "target": "Decorative Items"},
     {"source": "Base Building", "target": "Templates (Blueprints)"},
 
     {"source": "Start", "target": "Space"},
