@@ -212,8 +212,8 @@
     },
     {
       "id": "Weapon Variety", "group": "combat", "val" : 5, "color" : "red",
-      "type" : "Feature",
-      "tooltip": "Content: melee weapons, more guns, sci fi weapons, etc"
+      "type" : "Content",
+      "tooltip": "Melee weapons, more guns, sci fi weapons, etc"
     },
     {
       "id": "Smarter AI", "group": "combat", "val" : 5, "color" : "red",
