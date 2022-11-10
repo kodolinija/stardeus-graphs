@@ -17,3 +17,12 @@ Stardeus is an open ended space base building colony management sim. You are the
 - [/r/stardeus on Reddit](https://reddit.com/r/stardeus)
 - [@StardeusGame on Twitter](https://twitter.com/StardeusGame)
 - [@dev_spajus on Twitter](https://twitter.com/dev_spajus)
+
+### Local Testing
+
+Start a [local web server](https://gist.github.com/willurd/5720255):
+
+Python 3:
+```
+$ python -m http.server 8000
+```

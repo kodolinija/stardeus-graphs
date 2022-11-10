@@ -1,0 +1,226 @@
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/d3-dsv@3.0.1/dist/d3-dsv.min.js"></script>
+  <script src="https://unpkg.com/d3-quadtree@3.0.1/dist/d3-quadtree.min.js"></script>
+  <script src="https://unpkg.com/d3-force@3.0.0/dist/d3-force.min.js"></script>
+  <script src="https://unpkg.com/force-graph@1.42.16/dist/force-graph.min.js"></script>
+  <title>Stardeus Roadmap (2D)</title>
+  <style>
+      body {
+          margin: 0;
+          background-color: black;
+          color: white;
+          font-family: 'Michroma', sans-serif;
+          font-size: 1.2em;
+          text-transform: uppercase;
+      }
+      a {
+          color: white;
+          text-decoration: none;
+      }
+      .title {
+        color: orange;
+        font-weight: bold;
+      }
+      .type {
+        color: greenyellow;
+      }
+      .dim {
+        color: grey;
+      }
+      .tooltip {
+        background-color: black;
+        color: white;
+        border: white solid 1px;
+        text-transform: none;
+        padding: 10px;
+      }
+      #links {
+          position: absolute;
+          padding: 10px;
+          top:0px;
+          margin-left: 0px;
+          margin-right: 0px;
+      }
+      #logo {
+          position: absolute;
+          top: 0px;
+          right: 10px;
+      }
+      #alt-version {
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          padding: 10px;
+      }
+  </style>
+</head>
+
+<body>
+  <div id="graph"></div>
+  <div id="links">
+    <a href="/stardeus-graphs/">Back</a> &bull;
+    <a href="https://stardeusgame.com">Stardeus</a>
+  </div>
+  <div id="alt-version">
+    <a href="../roadmap-3d/">Switch to 3D</a>
+  </div>
+  <div id="logo">
+      <a href="https://stardeusgame.com"><img src="../StardeusLogo.png" height="50"/></a>
+  </div>
+
+  <script type="module">
+    let settled = false;
+    fetch('../data/roadmap.json').then(res => res.json()).then(data => {
+      const NODE_REL_SIZE = 80;
+      const N = 10;
+      const Graph = ForceGraph()
+      (document.getElementById('graph'))
+        .graphData(data)
+        .backgroundColor('transparent')
+        .nodeId('id')
+        .linkCurvature('curve')
+        .linkDirectionalParticles(link => link.wip ? 0 : 3)
+        .linkDirectionalParticleSpeed(0.002)
+        .linkDirectionalParticleWidth(3)
+        .linkColor(link => link.wip ? 'magenta' : 'rgba(255,255,255,0.8)')
+        .nodeAutoColorBy('group')
+        .nodeRelSize(NODE_REL_SIZE)
+        .d3Force('collision', d3.forceCollide(node => Math.sqrt(100 / (node.level + 1)) * NODE_REL_SIZE))
+        .cooldownTicks(300)
+        .d3VelocityDecay(0.1)
+        .nodeCanvasObject((node, ctx, globalScale) => {
+          const label = node.id;
+          let fontMul = node.type == "Category" ? 2 : 1;
+          if (node.id == "Start") {
+            fontMul = 3;
+          }
+          let fontSize = 16 / globalScale;
+          if (fontSize < 6) {
+            fontSize = 6;
+          }
+          fontSize *= fontMul;
+          ctx.font = `${fontSize}px Monospace`;
+          const textWidth = ctx.measureText(label).width  + 4;
+          const bckgDimensions = [textWidth, fontSize + 2].map(n => n + fontSize * 0.2); // some padding
+          const bckgDimensionsInner = [textWidth - 0.5, fontSize + 1.5].map(n => n + fontSize * 0.2); // some padding
+
+          if (node.wip) {
+            ctx.fillStyle = 'magenta';
+          } else {
+            ctx.fillStyle = 'white';
+          }
+          ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+          ctx.fillStyle = 'rgba(32, 0, 32, 1)';
+          ctx.fillRect(node.x - bckgDimensionsInner[0] / 2, node.y - bckgDimensionsInner[1] / 2, ...bckgDimensionsInner);
+
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = node.color;
+          ctx.fillText(label, node.x, node.y);
+
+          node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+        })
+        .onNodeClick(node => {
+          if (node.url != undefined) {
+            window.open(node.url, '_blank');
+            return;
+          }
+          // Center/zoom on node
+          Graph.centerAt(node.x, node.y, 1000);
+          Graph.zoom(8, 1000);
+        })
+        .nodeLabel(node => {
+          let text = "<span class=\"title\">" + node.id + "</span>"
+          if (node.type != undefined) {
+            text += " <span class=\"type\">[" + node.type + "]</span>";
+          }
+          text += "<br>" + node.tooltip;
+          if (node.url != undefined) {
+            text += "<br><span class=\"dim\">[click to open: " + node.url + "]</span>";
+          }
+          text = "<div class=\"tooltip\">" + text + "</div>";
+          return text;
+        })
+        .nodePointerAreaPaint((node, color, ctx) => {
+          ctx.fillStyle = color;
+          const bckgDimensions = node.__bckgDimensions;
+          bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+        })
+        .linkCanvasObjectMode(() => 'after')
+        .linkCanvasObject((link, ctx, globalScale) => {
+          if (globalScale < 8) { return null; }
+          if (link.text == undefined) { return null; }
+          const MAX_FONT_SIZE = 4;
+          const LABEL_NODE_MARGIN = Graph.nodeRelSize() * 1.2;
+
+          const start = link.source;
+          const end = link.target;
+
+          // ignore unbound links
+          if (typeof start !== 'object' || typeof end !== 'object') return;
+
+          // calculate label positioning
+          const textPos = Object.assign(...['x', 'y'].map(c => ({
+            [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
+          })));
+
+          const relLink = { x: end.x - start.x, y: end.y - start.y };
+
+          const maxTextLength = Math.sqrt(Math.pow(relLink.x, 2) + Math.pow(relLink.y, 2)) - LABEL_NODE_MARGIN * 2;
+
+          let textAngle = Math.atan2(relLink.y, relLink.x);
+          // maintain label vertical orientation for legibility
+          if (textAngle > Math.PI / 2) textAngle = -(Math.PI - textAngle);
+          if (textAngle < -Math.PI / 2) textAngle = -(-Math.PI - textAngle);
+
+          const label = link.text;
+
+          // estimate fontSize to fit in link length
+          let fontSize = 16 / globalScale;
+          if (fontSize < 2) {
+            fontSize = 2;
+          }
+          ctx.font = `${fontSize}px Monospace`;
+          //ctx.font = 'px Sans-Serif';
+          fontSize = Math.min(fontSize, maxTextLength / ctx.measureText(label).width);
+          ctx.font = `${fontSize}px Sans-Serif`;
+          const textWidth = ctx.measureText(label).width;
+
+          // draw text label (with background rect)
+          ctx.save();
+          ctx.translate(textPos.x, textPos.y);
+          ctx.rotate(textAngle);
+          ctx.translate(0, -1.5);
+
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = 'darkgrey';
+          ctx.fillText(label, 0, 0);
+          ctx.restore();
+        });
+
+        Graph
+            .d3Force('link')
+            .distance(link => link.dist || 50);
+        /*
+        Graph.d3Force('collide', d3.forceCollide(Graph.nodeRelSize()));
+        Graph.d3Force('box', () => {
+                const SQUARE_HALF_SIDE = Graph.nodeRelSize() * N * 0.5;
+            });
+            */
+        Graph.d3Force('center', null);
+        /*
+
+        // fit to canvas when engine stops
+        Graph.onEngineStop(() => {
+            if (!settled) {
+                settled = true;
+                Graph.zoomToFit(1000);
+            }
+        });
+        */
+    });
+  </script>
+</body>

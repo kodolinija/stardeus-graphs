@@ -3,6 +3,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
   <script src="//unpkg.com/three"></script>
   <script src="//unpkg.com/three-spritetext"></script>
+  <script src="//unpkg.com/three/examples/js/postprocessing/Pass.js"></script>
+  <script src="//unpkg.com/three/examples/js/shaders/CopyShader.js"></script>
+  <script src="//unpkg.com/three/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="//unpkg.com/three/examples/js/postprocessing/UnrealBloomPass.js"></script>
   <script src="//unpkg.com/3d-force-graph"></script>
   <title>Stardeus Research Graph (3D)</title>
   <style>
@@ -69,6 +73,21 @@
         .cooldownTicks(300)
         .d3VelocityDecay(0.1)
         .nodeRelSize(NODE_REL_SIZE)
+        .onNodeClick(node => {
+          // Aim at node from outside it
+          const distance = 40;
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+
+          const newPos = node.x || node.y || node.z
+            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+          Graph.cameraPosition(
+            newPos, // new position
+            node, // lookAt ({ x, y, z })
+            1000  // ms transition duration
+          );
+        })
         .nodeThreeObject(node => {
           const sprite = new SpriteText(node.id);
           sprite.backgroundColor = 'black';
@@ -88,6 +107,12 @@
       //Graph.numDimensions(3);
 
       Graph.d3Force('center', null);
+
+      const bloomPass = new THREE.UnrealBloomPass();
+      bloomPass.strength = 0.5;
+      bloomPass.radius = 0.5;
+      bloomPass.threshold = 0.1;
+      Graph.postProcessingComposer().addPass(bloomPass);
 
 /*
       // fit to canvas when engine stops

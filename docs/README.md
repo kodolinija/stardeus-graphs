@@ -4,8 +4,8 @@
 
 ### Graphs
 
-- [Gameplay (2D)](/stardeus-graphs/gameplay-2d/)
-- [Gameplay (3D)](/stardeus-graphs/gameplay-3d/)
+- [Roadmap (2D)](/stardeus-graphs/roadmap-2d/)
+- [Roadmap (3D)](/stardeus-graphs/roadmap-3d/)
 - [Research Tree (2D)](/stardeus-graphs/research-2d/)
 - [Research Tree (3D)](/stardeus-graphs/research-3d/)
 

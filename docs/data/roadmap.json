@@ -1,0 +1,363 @@
+{
+  "nodes": [
+    {
+      "id": "Start", "group": "start", "val": 10, "color" : "aquamarine",
+      "url" : "https://discord.com/invite/89amEwP",
+      "tooltip" : "Explore this feature tree to choose what you want to vote for. Then click Start."
+    },
+
+
+    {
+      "id": "Humans", "group": "humans", "val" : 5, "color" : "mediumorchid",
+      "type" : "Category",
+      "tooltip": "Features related to human behavior and complexity"
+    },
+    {
+      "id": "More Behaviors", "group": "humans", "val" : 5, "color" : "mediumorchid",
+      "type" : "Feature",
+      "tooltip": "More interesting humans with more needs and behaviors and interaction"
+    },
+    {
+      "id": "More Traits", "group": "humans", "val" : 5, "color" : "mediumorchid",
+      "type" : "Content",
+      "tooltip": "More variety of human traits"
+    },
+    {
+      "id": "More Emotions", "group": "humans", "val" : 5, "color" : "mediumorchid",
+      "type" : "Feature",
+      "tooltip": "Work towards complex emotions, reactions to death, love, loss, happiness, etc."
+    },
+    {
+      "id": "Complex Biology", "group": "humans", "val" : 5, "color" : "mediumorchid",
+      "type" : "Feature",
+      "tooltip": "Complex health system with body parts, diseases, health effects, transplants, implants, operations, organ harvesting, etc"
+    },
+    {
+      "id": "Stasis Management", "group": "humans", "val" : 5, "color" : "mediumorchid",
+      "type" : "Feature",
+      "tooltip": "Preventing people from waking up, putting humans back in, choosing who wakes up, etc."
+    },
+
+
+    {
+      "id": "Robots", "group": "robots", "val" : 5, "color" : "orange",
+      "type" : "Category",
+      "tooltip": "Features related to robot behavior and complexity"
+    },
+    {
+      "id": "More Robots", "group": "robots", "val" : 5, "color" : "orange",
+      "type" : "Feature",
+      "tooltip": "More types of specialized robots"
+    },
+    {
+      "id": "Modular Robots", "group": "robots", "val" : 5, "color" : "orange",
+      "type" : "Feature",
+      "tooltip": "Robots with interchangable body parts, cyborgs, skill installations, backups, skill transfers, etc."
+    },
+    {
+      "id": "Elysium", "group": "robots", "val" : 5, "color" : "orange",
+      "type" : "Feature",
+      "tooltip": "Further development of Elysium technology (rogue AI path)"
+    },
+
+    {
+      "id": "Cybernetics", "group": "robots", "val" : 5, "color" : "mintcream",
+      "type" : "Feature",
+      "tooltip": "Blurring the line between Robots and Humans"
+    },
+
+
+    {
+      "id": "Base Building", "group": "ship", "val" : 5, "color" : "lightslategrey",
+      "type" : "Category",
+      "tooltip": "Ship building and base building features and content"
+    },
+    {
+      "id": "Auto Rebuild", "group": "ship", "val" : 5, "color" : "lightslategrey",
+      "type" : "Feature",
+      "tooltip": "Automatically rebuild destroyed structure and devices"
+    },
+    {
+      "id": "Templates (Blueprints)", "group": "ship", "val" : 5, "color" : "lightslategrey",
+      "type" : "Feature",
+      "tooltip": "Select multiple objects on your ship and save the selection as a blueprint for quick duplication"
+    },
+
+
+    {
+      "id": "Space", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Category",
+      "tooltip": "Features related to space exploration and expeditions"
+    },
+    {
+      "id": "Distress Signals", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "Random incoming signals leading you to dereclict ships, pirates, merchants, etc."
+    },
+    {
+      "id": "Piracy", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "Pirate ships, your ship taking a pirate role, attacking other ships"
+    },
+    {
+      "id": "Space Travel", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "More means of space travel - warp drives, hyperspace jumps, custom wormholes, etc"
+    },
+    {
+      "id": "Space Stations", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "A space station type of object you can interact with, trade, get quests, etc"
+    },
+    {
+      "id": "Derelict Ships", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "Abandoned ships would be generated in space. It would be an expedition target and potentially a threat"
+    },
+    {
+      "id": "Space Traffic", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "More types of space traffic (pirate ships, other faction traffic, aliens, visible asteroid, meteorites, etc.)"
+    },
+    {
+      "id": "Ship to Ship Combat", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "Fight other ships. Turn them into derelicts that you can explore and salvage."
+    },
+    {
+      "id": "Complex Planets", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "Planets will have more options and new UI to interact with them, not just mining expeditions."
+    },
+    {
+      "id": "Better Mining", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "Planets won't have limited resources, there will be ways to get better mining equipment and extract more from same planets."
+    },
+    {
+      "id": "Passive Mining", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "Put permanent equipment on planets to establish passive mining operations, then collect loot at your convenience"
+    },
+    {
+      "id": "Targeted Scanning", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "type" : "Feature",
+      "tooltip": "Search the star system or galaxy for specific materials, derelic ships, anomalies, etc"
+    },
+
+
+    {
+      "id": "Diplomacy", "group": "diplomacy", "val" : 5, "color" : "coral",
+      "type" : "Category",
+      "tooltip": "Features related to interactions with other factions"
+    },
+    {
+      "id": "Diplomacy UI", "group": "diplomacy", "val" : 5, "color" : "coral",
+      "type" : "Feature",
+      "tooltip": "Expose the diplomacy system UI, add more interactions with other factions (gifts, bribes, threats, blackmail, etc.)"
+    },
+
+
+    {
+      "id": "Economy", "group": "economy", "val" : 5, "color" : "forestgreen",
+      "type" : "Category",
+      "tooltip": "Features related to trading and stock market"
+    },
+    {
+      "id": "Online Shopping", "group": "economy", "val" : 5, "color" : "forestgreen",
+      "type" : "Feature",
+      "tooltip": "Ordering specific goods without merchant having to physically be present and getting them delivered."
+    },
+    {
+      "id": "Deeper Economy", "group": "economy", "val" : 5, "color" : "forestgreen",
+      "type" : "Feature",
+      "tooltip": "Player actions will impact global supply / demand and affect market prices."
+    },
+    {
+      "id": "Options Trading", "group": "economy", "val" : 5, "color" : "forestgreen",
+      "type" : "Feature",
+      "tooltip": "Stock market options, short selling stocks"
+    },
+    {
+      "id": "Corporations", "group": "economy", "val" : 5, "color" : "forestgreen",
+      "type" : "Feature",
+      "tooltip": "Factions will control various corporations that generate profit. You can establish, buy, sell, influence, sabotage the corporations. Each corporation would have their own stock ticker in the Stock Market and will be publically traded."
+    },
+    {
+      "id": "Trade Routes", "group": "economy", "val" : 5, "color" : "forestgreen",
+      "type" : "Feature",
+      "tooltip": "Establish automatic trade routes between planets / systems / galaxies"
+    },
+    {
+      "id": "Owning Planets", "group": "economy", "val" : 5, "color" : "forestgreen",
+      "type" : "Feature",
+      "tooltip": "Claim, buy, sell planets, fight with other factions for control. Move into 4X genre."
+    },
+
+
+    {
+      "id": "Combat", "group": "combat", "val" : 5, "color" : "red",
+      "type" : "Category",
+      "tooltip": "Features related to combat, raids, weapons and defenses"
+    },
+    {
+      "id": "Weapon Variety", "group": "combat", "val" : 5, "color" : "red",
+      "type" : "Feature",
+      "tooltip": "Content: melee weapons, more guns, sci fi weapons, etc"
+    },
+    {
+      "id": "Smarter AI", "group": "combat", "val" : 5, "color" : "red",
+      "type" : "Feature",
+      "tooltip": "More polished and advanced combat AI with better tactics and self coordination"
+    },
+    {
+      "id": "More Control", "group": "combat", "val" : 5, "color" : "red",
+      "type" : "Feature",
+      "tooltip": "Extra controls for micromanaging combat units"
+    },
+
+
+    {
+      "id": "Quests", "group": "quests", "val" : 5, "color" : "yellowgreen",
+      "type" : "Category",
+      "tooltip": "Features related to the quest system"
+    },
+    {
+      "id": "Random Quests", "group": "quests", "val" : 5, "color" : "yellowgreen",
+      "type" : "Feature",
+      "tooltip": "Procedurally generated quests you can receive from NPCs (other factions, ships, your own colonists, etc)"
+    },
+    {
+      "id": "Story Quests", "group": "quests", "val" : 5, "color" : "yellowgreen",
+      "type" : "Feature",
+      "tooltip": "More scenario quests leading to the end game and post end game"
+    },
+
+    {
+      "id": "Story", "group": "story", "val" : 5, "color" : "hotpink",
+      "type" : "Category",
+      "tooltip": "Features related to story generation, scenarios, difficulty, balance and variety of story events"
+    },
+    {
+      "id": "More Events", "group": "story", "val" : 5, "color" : "hotpink",
+      "type" : "Content",
+      "tooltip": "More variety of story events"
+    },
+    {
+      "id": "Smarter Story Generator", "group": "story", "val" : 5, "color" : "hotpink",
+      "type" : "Feature",
+      "tooltip": "Improved story generator algorithm with better pacing, severity scaling, player progress tracking, etc"
+    },
+    {
+      "id": "Random Ship Scenario", "group": "story", "val" : 5, "color" : "hotpink",
+      "type" : "Feature",
+      "tooltip": "Finish the Random Ship scenario which is now an incomplete shell"
+    },
+    {
+      "id": "Ship Export / Import", "group": "story", "val" : 5, "color" : "hotpink",
+      "type" : "Feature",
+      "tooltip": "Export the ship to Steam Workshop. Download ships. Use custom ships as starting points for supported scenarios"
+    },
+
+
+    {
+      "id": "UI/UX", "group": "story", "val" : 5, "color" : "honeydew",
+      "type" : "Category",
+      "tooltip": "QoL, User Interface improvements, Usability, User Experience, Key Bindings, etc."
+    },
+    {
+      "id": "UI Themes", "group": "story", "val" : 5, "color" : "honeydew",
+      "type" : "Feature",
+      "tooltip": "Add alternative UI Themes (skins) with option to add them through mods"
+    },
+    {
+      "id": "UI Overhaul", "group": "story", "val" : 5, "color" : "honeydew",
+      "type" : "Feature",
+      "tooltip": "Full review of every single UI menu and element, rethinking it and making it easier to use, require less clicks, with better tooltips, etc."
+    },
+
+
+    {
+      "id": "Modding", "group": "modding", "val" : 5, "color" : "MediumTurquoise",
+      "type" : "Category",
+      "tooltip": "Changes relating to modding"
+    },
+    {
+      "id": "Harmony Support", "group": "modding", "val" : 5, "color" : "MediumTurquoise",
+      "url" : "https://github.com/pardeike/Harmony",
+      "type" : "Feature",
+      "tooltip": "Feature: Native support for Harmony modding library"
+    }
+  ],
+
+  "links": [
+    {"source": "Start", "target": "Humans"},
+    {"source": "Humans", "target": "Complex Biology"},
+    {"source": "Humans", "target": "More Behaviors"},
+    {"source": "Humans", "target": "More Emotions"},
+    {"source": "Humans", "target": "More Traits"},
+    {"source": "Humans", "target": "Stasis Management"},
+
+    {"source": "Start", "target": "Robots"},
+    {"source": "Robots", "target": "Elysium"},
+    {"source": "Robots", "target": "Modular Robots"},
+    {"source": "Robots", "target": "More Robots"},
+
+    {"source": "Modular Robots", "target": "Cybernetics"},
+    {"source": "Complex Biology", "target": "Cybernetics"},
+
+    {"source": "Start", "target": "Base Building"},
+    {"source": "Base Building", "target": "Auto Rebuild"},
+    {"source": "Base Building", "target": "Templates (Blueprints)"},
+
+    {"source": "Start", "target": "Space"},
+    {"source": "Space", "target": "Space Stations"},
+    {"source": "Space", "target": "Complex Planets"},
+    {"source": "Space", "target": "Derelict Ships"},
+    {"source": "Derelict Ships", "target": "Ship to Ship Combat"},
+    {"source": "Derelict Ships", "target": "Distress Signals"},
+    {"source": "Space", "target": "Space Traffic"},
+    {"source": "Space Traffic", "target": "Ship to Ship Combat"},
+    {"source": "Ship to Ship Combat", "target": "Piracy"},
+    {"source": "Space", "target": "Space Travel"},
+    {"source": "Space", "target": "Targeted Scanning"},
+    {"source": "Complex Planets", "target": "Better Mining"},
+    {"source": "Complex Planets", "target": "Passive Mining"},
+
+
+    {"source": "Start", "target": "Diplomacy"},
+    {"source": "Diplomacy", "target": "Diplomacy UI"},
+
+    {"source": "Start", "target": "Economy"},
+    {"source": "Economy", "target": "Options Trading"},
+    {"source": "Economy", "target": "Deeper Economy"},
+    {"source": "Deeper Economy", "target": "Corporations"},
+    {"source": "Economy", "target": "Online Shopping"},
+    {"source": "Deeper Economy", "target": "Owning Planets"},
+    {"source": "Owning Planets", "target": "Trade Routes"},
+
+
+    {"source": "Start", "target": "Combat"},
+    {"source": "Combat", "target": "Weapon Variety"},
+    {"source": "Combat", "target": "Smarter AI"},
+    {"source": "Combat", "target": "More Control"},
+
+    {"source": "Start", "target": "Story"},
+    {"source": "Story", "target": "More Events"},
+    {"source": "Story", "target": "Random Ship Scenario"},
+    {"source": "Story", "target": "Smarter Story Generator"},
+    {"source": "Story", "target": "Ship Export / Import"},
+
+    {"source": "Start", "target": "UI/UX"},
+    {"source": "UI/UX", "target": "UI Themes"},
+    {"source": "UI/UX", "target": "UI Overhaul"},
+
+    {"source": "Start", "target": "Quests"},
+    {"source": "Quests", "target": "Random Quests"},
+    {"source": "Quests", "target": "Story Quests"},
+
+
+    {"source": "Start", "target": "Modding"},
+    {"source": "Modding", "target": "Harmony Support"}
+  ]
+}
