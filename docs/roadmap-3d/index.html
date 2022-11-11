@@ -142,15 +142,22 @@
           return text;
         })
         .nodeThreeObject(node => {
-          let fontMul = node.type == "Category" ? 3 : 1;
+          let text = node.id;
+          let fontMul = 1;
+          let borderColor = 'white';
+          if (node.type == "Category") {
+            fontMul = 3;
+            text = text.toUpperCase();
+            borderColor = 'yellow';
+          }
           if (node.id == "Start") {
             fontMul = 5;
           }
-          const sprite = new SpriteText(node.id);
+          const sprite = new SpriteText(text);
           sprite.backgroundColor = 'black';
           sprite.padding = 3;
           sprite.color = node.color;
-          sprite.borderColor = node.wip ? 'magenta' : 'white';
+          sprite.borderColor = borderColor;
           sprite.borderWidth = 1;
           sprite.borderRadius = 3;
           sprite.textHeight = 6 * fontMul;

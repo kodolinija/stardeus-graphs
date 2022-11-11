@@ -91,8 +91,12 @@
         .cooldownTicks(300)
         .d3VelocityDecay(0.1)
         .nodeCanvasObject((node, ctx, globalScale) => {
-          const label = node.id;
-          let fontMul = node.type == "Category" ? 2 : 1;
+          let label = node.id;
+          let fontMul = 1;
+          if (node.type == "Category") {
+            fontMul = 2;
+            label = label.toUpperCase();
+          }
           if (node.id == "Start") {
             fontMul = 3;
           }
@@ -102,15 +106,17 @@
           }
           fontSize *= fontMul;
           ctx.font = `${fontSize}px Monospace`;
-          const textWidth = ctx.measureText(label).width  + 4;
-          const bckgDimensions = [textWidth, fontSize + 2].map(n => n + fontSize * 0.2); // some padding
-          const bckgDimensionsInner = [textWidth - 0.5, fontSize + 1.5].map(n => n + fontSize * 0.2); // some padding
-
-          if (node.wip) {
-            ctx.fillStyle = 'magenta';
+          let borderWidth = 0;
+          if (node.type == "Category") {
+            ctx.fillStyle = 'yellow';
+            borderWidth = 0.05;
           } else {
             ctx.fillStyle = 'white';
           }
+          const textWidth = ctx.measureText(label).width  + 4;
+          const bckgDimensions = [textWidth, fontSize + 2].map(n => n + fontSize * (0.2 + borderWidth)); // some padding
+          const bckgDimensionsInner = [textWidth - 0.5, fontSize + 1.5].map(n => n + fontSize * 0.2); // some padding
+
           ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
           ctx.fillStyle = 'rgba(32, 0, 32, 1)';
           ctx.fillRect(node.x - bckgDimensionsInner[0] / 2, node.y - bckgDimensionsInner[1] / 2, ...bckgDimensionsInner);
