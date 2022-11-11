@@ -110,7 +110,7 @@
       "tooltip": "Pirate ships, your ship taking a pirate role, attacking other ships"
     },
     {
-      "id": "Space Travel", "group": "space", "val" : 5, "color" : "deepskyblue",
+      "id": "Advanced Travel", "group": "space", "val" : 5, "color" : "deepskyblue",
       "type" : "Feature",
       "tooltip": "More means of space travel - warp drives, hyperspace jumps, custom wormholes, etc"
     },
@@ -331,7 +331,7 @@
     {"source": "Space", "target": "Space Traffic"},
     {"source": "Space Traffic", "target": "Ship to Ship Combat"},
     {"source": "Ship to Ship Combat", "target": "Piracy"},
-    {"source": "Space", "target": "Space Travel"},
+    {"source": "Space", "target": "Advanced Travel"},
     {"source": "Space", "target": "Targeted Scanning"},
     {"source": "Complex Planets", "target": "Better Mining"},
     {"source": "Complex Planets", "target": "Passive Mining"},
