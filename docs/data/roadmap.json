@@ -2,8 +2,8 @@
   "nodes": [
     {
       "id": "Start", "group": "start", "val": 10, "color" : "aquamarine",
-      "url" : "https://discord.com/invite/89amEwP",
-      "tooltip" : "Explore this feature tree to choose what you want to vote for. Then click Start."
+      "url" : "https://forms.gle/VprnyUkDtReZi7A78",
+      "tooltip" : "Explore this feature tree to choose what you want to vote for. Then click Start to begin voting."
     },
 
 
