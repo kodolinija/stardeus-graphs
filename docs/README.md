@@ -13,7 +13,6 @@
 
 - [Stardeus Homepage](https://stardeusgame.com)
 - [Stardeus on Steam](https://store.steampowered.com/app/1380910/Stardeus/?utm_source=Github&utm_campaign=stardeus-graphs)
-- [Stardeus on GOG](https://www.gog.com/en/game/stardeus)
 - [Kodo Linija Discord](https://discordapp.com/invite/89amEwP)
 - [/r/stardeus on Reddit](https://reddit.com/r/stardeus)
 - [@StardeusGame on Twitter](https://twitter.com/StardeusGame)
