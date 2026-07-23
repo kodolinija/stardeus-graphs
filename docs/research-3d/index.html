@@ -1,13 +1,15 @@
+<!DOCTYPE html>
 <head>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
-  <script src="//cdn.jsdelivr.net/npm/three/build/three.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/three-spritetext/dist/three-spritetext.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/three/examples/js/postprocessing/Pass.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/three/examples/js/shaders/CopyShader.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/three/examples/js/shaders/LuminosityHighPassShader.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/three/examples/js/postprocessing/UnrealBloomPass.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/3d-force-graph/dist/3d-force-graph.min.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.179/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.179/examples/jsm/"
+    }
+  }
+  </script>
   <title>Stardeus Research Graph (3D)</title>
   <style>
       body {
@@ -58,10 +60,13 @@
 
 
   <script type="module">
+      import ForceGraph3D from 'https://esm.sh/3d-force-graph@1.80.0?external=three';
+      import SpriteText from 'https://esm.sh/three-spritetext@1.10.0?external=three';
+      import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
       const NODE_REL_SIZE = 1;
       let settled = false;
-      const Graph = ForceGraph3D({ controlType: 'orbit' })
-      (document.getElementById('graph'))
+      const Graph = new ForceGraph3D(document.getElementById('graph'), { controlType: 'orbit' })
         .jsonUrl("../data/research-gen.json")
         .nodeId('id')
         .linkDirectionalParticles(link => link.wip ? 0 : 3)
@@ -108,7 +113,7 @@
 
       Graph.d3Force('center', null);
 
-      const bloomPass = new THREE.UnrealBloomPass();
+      const bloomPass = new UnrealBloomPass();
       bloomPass.strength = 0.5;
       bloomPass.radius = 0.5;
       bloomPass.threshold = 0.1;
