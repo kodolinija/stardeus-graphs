@@ -6,7 +6,9 @@
   {
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.179/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.179/examples/jsm/"
+      "three/webgpu": "https://cdn.jsdelivr.net/npm/three@0.179/build/three.webgpu.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.179/examples/jsm/",
+      "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.179/examples/jsm/"
     }
   }
   </script>
@@ -66,6 +68,7 @@
       let settled = false;
       const Graph = new ForceGraph3D(document.getElementById('graph'), { controlType: 'orbit' })
         .jsonUrl("../data/combat-ai.json")
+        .backgroundColor('#000000')
         .nodeId('id')
         .linkDirectionalParticles(link => link.wip ? 0 : 3)
         .linkDirectionalParticleSpeed(0.002)
